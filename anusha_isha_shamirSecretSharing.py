@@ -56,7 +56,10 @@ def sharesToSecret(shares):
 			if j != i:
 				xj = shares[j][0]
 				yj = shares[j][1]
-				prod *= ((xj-x) * pow((xj-xi), -1, prime))%prime
+				if xj >= xi:
+					prod *= ((xj - x) * pow((xj - xi), -1, prime)) % prime
+				else:
+					prod *= ((xj - x) * pow(prime - (xi-xj), -1, prime))%prime
 		prod *= yi
 		tot += prod
 	secret = tot % prime
