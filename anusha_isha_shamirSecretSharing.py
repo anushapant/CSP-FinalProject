@@ -1,12 +1,18 @@
 import random, decimal
 
+prime = 7919
 # The number of shares
 n = 10
 # The threshold value
 t = 4
 # The actual information / secret
-s = 2022
+s = 7000
+if s>prime:
+	print("Invalid secret value")
+	exit()
+
 print("Secret :",s)
+print("n: ", n, ", t:",t, ", Prime:",prime)
 
 # FUNCTIONS DEFINED BELOW
 
@@ -24,13 +30,13 @@ def secretToShares(secret, n, t):
 	polyCoeff = [None]*t
 	polyCoeff[0] = secret
 	for i in range(1,t):
-		polyCoeff[i] = random.randint(1,1000) # Each coefficient is some value between 1 and 1000
+		polyCoeff[i] = (random.randint(1,10000))%prime
 
 	# Creating n shares to be distributed to the participants
 	shares = [None]*n
 	for i in range(n):
-		val = random.randint(1, 10000) # For each share, chooses a random x coordinate value
-		polVal = valOnPol(val, polyCoeff)
+		val = random.randint(1, 10000)%prime  # For each share, chooses a random x coordinate value
+		polVal = valOnPol(val, polyCoeff)%prime
 		shares[i] = (val,polVal)
 
 	return shares
@@ -50,11 +56,10 @@ def sharesToSecret(shares):
 			if j != i:
 				xj = shares[j][0]
 				yj = shares[j][1]
-				val = decimal.Decimal(x - xj)/(xi - xj)
-				prod *= val
+				prod *= ((xj-x) * pow((xj-xi), -1, prime))%prime
 		prod *= yi
 		tot += prod
-		secret = round(tot)
+	secret = tot % prime
 	return secret
 
 # FUNCTIONS END HERE
@@ -65,6 +70,7 @@ print("n Shares :",shares)
 
 # Choosing t shares from n at random
 tShares = random.sample(shares, t)
+print("Number of shares brought together:",len(tShares))
 # Trying to reconstruct the original secret from just these t shares
 reconstructedSecret = sharesToSecret(tShares)
-print(reconstructedSecret)
+print("Retrieved secret:",reconstructedSecret)
