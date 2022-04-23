@@ -1,18 +1,4 @@
-import random, decimal
-
-prime = 7919
-# The number of shares
-n = 10
-# The threshold value
-t = 4
-# The actual information / secret
-s = 7000
-if s>prime:
-	print("Invalid secret value")
-	exit()
-
-print("Secret :",s)
-print("n: ", n, ", t:",t, ", Prime:",prime)
+import random
 
 # FUNCTIONS DEFINED BELOW
 
@@ -25,7 +11,10 @@ def valOnPol(x, coeffs):
 	return y
 
 # Creating n shares
-def secretToShares(secret, n, t):
+def secretToShares(secret, n, t, prime):
+	if secret > prime:
+		print("Invalid secret value")
+		exit()
 	# Generating the coefficients of a polynomial of degree t-1
 	polyCoeff = [None]*t
 	polyCoeff[0] = secret
@@ -44,7 +33,7 @@ def secretToShares(secret, n, t):
 # Since SSS is based on polynomial interpolation, using Lagrange interpolation to obtain the secret from the shares
 # Sum(Prod((x-xj)/(xi-xj))) where i and j go from 0 to n
 # In our case, x = 0 since we care only about the constant value
-def sharesToSecret(shares):
+def sharesToSecret(shares, prime):
 	x = 0
 	tot = 0
 	secret = 0
@@ -57,9 +46,10 @@ def sharesToSecret(shares):
 				xj = shares[j][0]
 				yj = shares[j][1]
 				if xj >= xi:
-					prod *= ((xj - x) * pow((xj - xi), -1, prime)) % prime
+					prod *= (xj - x) * pow((xj - xi), -1, prime)
 				else:
-					prod *= ((xj - x) * pow(prime - (xi-xj), -1, prime))%prime
+					prod *= (xj - x) * pow(prime - (xi-xj), -1, prime)
+		prod = prod % prime
 		prod *= yi
 		tot += prod
 	secret = tot % prime
@@ -67,13 +57,25 @@ def sharesToSecret(shares):
 
 # FUNCTIONS END HERE
 
-# Taking the secret value and generating n shares
-shares = secretToShares(s,n,t)
-print("n Shares :",shares)
+if __name__ == "__main__":
+	prime = 7919
+	# The number of shares
+	n = 10
+	# The threshold value
+	t = 4
+	# The actual information / secret
+	s = 7000
 
-# Choosing t shares from n at random
-tShares = random.sample(shares, t)
-print("Number of shares brought together:",len(tShares))
-# Trying to reconstruct the original secret from just these t shares
-reconstructedSecret = sharesToSecret(tShares)
-print("Retrieved secret:",reconstructedSecret)
+	print("Secret :", s)
+	print("n: ", n, ", t:", t, ", Prime:", prime)
+
+	# Taking the secret value and generating n shares
+	shares = secretToShares(s, n, t, prime)
+	print("n Shares :", shares)
+
+	# Choosing t shares from n at random
+	tShares = random.sample(shares, t)
+	print("Number of shares brought together:", len(tShares))
+	# Trying to reconstruct the original secret from just these t shares
+	reconstructedSecret = sharesToSecret(tShares, prime)
+	print("Retrieved secret:", reconstructedSecret)
