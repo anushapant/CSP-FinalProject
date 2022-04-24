@@ -1,5 +1,5 @@
 import hashlib, random
-from anusha_isha_shamirSecretSharing import secretToShares
+from SSS import secretToShares
 prime = 2**11213 - 1 #Mersenne Prime - 23 from https://mathworld.wolfram.com/MersennePrime.html
 
 # The following values can also be taken as input from the user
