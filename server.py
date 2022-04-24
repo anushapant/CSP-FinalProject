@@ -11,6 +11,9 @@ ServerSocket= socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 ServerSocket.bind((ip,port))
 ServerSocket.listen()
 
+numShares = 15
+threshold = 12
+
 while True:
 
     (ClientSocket, Address) = ServerSocket.accept()
@@ -36,7 +39,7 @@ while True:
 
         if existing == "no":
             users.append(username)
-            securePW = genSafePW(password, username)
+            securePW = genSafePW(password, username, numShares,threshold)
 
             passwords.append(securePW)
 
@@ -52,7 +55,7 @@ while True:
     elif (choice == "S" or choice == "s"):
         username = ClientSocket.recv(1024).decode()
         password = ClientSocket.recv(1024).decode()
-        storedPW = genSafePW(password, username)
+        storedPW = genSafePW(password, username, numShares,threshold)
 
         print("Sign-in")
         print("For user:", username, "the entered password is:", password)

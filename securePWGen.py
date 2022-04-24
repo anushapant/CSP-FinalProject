@@ -11,13 +11,11 @@ def getASCII(string):
         new += n
     return new
 
-def genSafePW(p, u):
+def genSafePW(p, u, numShares, threshold):
     random.seed(0)
 
     s = random.randint(1,100000) # salt value generated randomly
 
-    numShares = 10
-    threshold = 5
     s = str(s)
     singleString = u+p+s
     new = getASCII(singleString)
@@ -39,5 +37,7 @@ if __name__ == "__main__":
     password = "password"
     userID = "ishanusha"
 
-    pw = genSafePW(password,userID)
+    numShares = 15
+    threshold = 10
+    pw = genSafePW(password,userID, numShares, threshold)
     print("New PW:",pw)
