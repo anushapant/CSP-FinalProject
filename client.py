@@ -1,7 +1,7 @@
 import socket
 
 ip='127.0.0.1'
-port=5001
+port=5000
 ClientSocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 ClientSocket.connect((ip, port))
 
@@ -19,10 +19,16 @@ if(choice == "R" or choice == "r"):
     password = input("Please enter your password: ")
     ClientSocket.send((password).encode())
 
+    existing = ClientSocket.recv(1024).decode()
 
-    flag = ClientSocket.recv(2048).decode()
-    if flag == "1":
-        print("You have registered successfully!")
+    if existing == "yes":
+        print("Sorry, an account with this username already exists")
+
+    else:
+
+        flag = ClientSocket.recv(2048).decode()
+        if flag == "1":
+            print("You have registered successfully!")
 
 elif (choice == "S" or choice == "s"):
     username = input("Please enter your username: ")
