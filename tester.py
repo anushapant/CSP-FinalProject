@@ -3,7 +3,7 @@ import string, random, time
 
 usernames = []
 genPWs = []
-num = 100
+num = 10**2
 
 n = 6
 t = 2

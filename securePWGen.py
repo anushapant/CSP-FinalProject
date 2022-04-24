@@ -18,6 +18,7 @@ def genSafePW(p, u, numShares, threshold):
 
     s = str(s)
     singleString = u+p+s
+    singleString = hashlib.sha512(singleString.encode('utf-8')).hexdigest()
     new = getASCII(singleString)
 
     shares = secretToShares(int(new),numShares,threshold, prime)
@@ -27,7 +28,8 @@ def genSafePW(p, u, numShares, threshold):
     for s in fewerThanTShares:
         newPW += str(s[0]) + str(s[1])
 
-    newPW = hashlib.sha256(newPW.encode('utf-8')).hexdigest()
+    # performing the following to bring down the size of the generated password
+    newPW = hashlib.sha512(newPW.encode('utf-8')).hexdigest()
     return newPW
 
 
