@@ -1,6 +1,7 @@
 from securePWGen import genSafePW
 import string, random, time
 
+usernames = []
 genPWs = []
 num = 100
 
@@ -19,6 +20,12 @@ for i in range(num):
     l = string.ascii_lowercase
     username = ''.join(random.choice(l) for i in range(4))
     password = ''.join(random.choice(l) for i in range(4))
+
+    while username in usernames:
+        username = ''.join(random.choice(l) for i in range(4))
+
+    usernames.append(username)
+
     pw = genSafePW(password,username,n,t)
 
     # Keeping track of the number of collisions
