@@ -19,12 +19,12 @@ def secretToShares(secret, n, t, prime):
 	polyCoeff = [None]*t
 	polyCoeff[0] = secret
 	for i in range(1,t):
-		polyCoeff[i] = (random.randint(1,10000))%prime
+		polyCoeff[i] = random.randint(1,prime)
 
 	# Creating n shares to be distributed to the participants
 	shares = [None]*n
 	for i in range(n):
-		val = random.randint(1, 10000)%prime  # For each share, chooses a random x coordinate value
+		val = random.randint(1, prime)  # For each share, chooses a random x coordinate value
 		polVal = valOnPol(val, polyCoeff)%prime
 		shares[i] = (val,polVal)
 
