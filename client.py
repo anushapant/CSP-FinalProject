@@ -1,4 +1,5 @@
 import socket
+import getpass
 
 ip='127.0.0.1'
 port=5000
@@ -16,7 +17,7 @@ ClientSocket.send((choice).encode())
 if(choice == "R" or choice == "r"):
     username = input("Please enter your username: ")
     ClientSocket.send((username).encode())
-    password = input("Please enter your password: ")
+    password = getpass.getpass(prompt='Please enter your password: ')
     ClientSocket.send((password).encode())
 
     existing = ClientSocket.recv(1024).decode()
@@ -33,7 +34,7 @@ if(choice == "R" or choice == "r"):
 elif (choice == "S" or choice == "s"):
     username = input("Please enter your username: ")
     ClientSocket.send((username).encode())
-    password = input("Please enter your password: ")
+    password = getpass.getpass(prompt='Please enter your password: ')
     ClientSocket.send((password).encode())
 
     flag = ClientSocket.recv(2048).decode()

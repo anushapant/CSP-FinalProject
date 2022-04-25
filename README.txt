@@ -4,6 +4,7 @@ We have implemented an authentication application of Shamir's Secret Sharing alg
 as proposed in "Shamir's Secret Sharing for Authentication without Reconstructing Password" by Gupta, Rahman,Dasgupta and Poudyal.
 
 We have built a client-server system which demonstrates the authentication protocol described in the paper mentioned above.
+To see the full report and analysis of the project, navigate to _____.
 In order to see the system running, it is required to run both, the server.py and the client.py files.
 
 Steps:

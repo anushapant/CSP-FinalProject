@@ -11,6 +11,7 @@ port=5000
 ServerSocket= socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 ServerSocket.bind((ip,port))
 ServerSocket.listen()
+print("Server is listening")
 
 # Defining SSS variables
 numShares = 15
