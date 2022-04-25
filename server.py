@@ -1,16 +1,18 @@
 import socket
 from securePWGen import genSafePW
 
-#valid users so far
+# Test user as initial valid user
 users = ["testUser"]
 passwords = ["test"]
 
+# Establishing port connections
 ip='127.0.0.1'
 port=5000
 ServerSocket= socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 ServerSocket.bind((ip,port))
 ServerSocket.listen()
 
+# Defining SSS variables
 numShares = 15
 threshold = 12
 
@@ -44,9 +46,9 @@ while True:
             passwords.append(securePW)
 
             # The client will not have access to the information being printed below
-            print("Registration")
-            print("For user:", username, "the password is:", password)
-            print("However, for security purposes, what will now be stored is:",securePW)
+            print("\nRegistration")
+            print("For user:", username, ",the password is:", password)
+            print("However, for security purposes, what will now be stored in the server is:",securePW)
             print("Even if this information is somehow exposed, no adversary will be able to obtain the original password!")
 
             flag = 1
@@ -57,10 +59,10 @@ while True:
         password = ClientSocket.recv(1024).decode()
         storedPW = genSafePW(password, username, numShares,threshold)
 
-        print("Sign-in")
-        print("For user:", username, "the entered password is:", password)
+        print("\nSign-in")
+        print("For user:", username, ",the entered password is:", password)
         print("However, if this user has an account, what should have been stored is:", storedPW)
-        print("If the entries match, the user will be able to sign in successfully.")
+        print("If the entries match, the user will be able to sign in successfully! ")
 
         flag = 0
         for i in range(len(users)):

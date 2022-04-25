@@ -22,13 +22,13 @@ if(choice == "R" or choice == "r"):
     existing = ClientSocket.recv(1024).decode()
 
     if existing == "yes":
-        print("Sorry, an account with this username already exists")
+        print("Sorry, an account with this username already exists!")
 
     else:
 
         flag = ClientSocket.recv(2048).decode()
         if flag == "1":
-            print("You have registered successfully!")
+            print("Registration successful!")
 
 elif (choice == "S" or choice == "s"):
     username = input("Please enter your username: ")
@@ -38,9 +38,9 @@ elif (choice == "S" or choice == "s"):
 
     flag = ClientSocket.recv(2048).decode()
     if flag == "1":
-        print("You have been able to sign in successfully!")
+        print("Sign-in successful!")
     else:
-        print("The details you entered were not valid! Please try to sign in again, or register.")
+        print("The details you entered are not valid! Please try to sign in again, or register.")
 
 else:
-    print("That is an invalid input")
+    print("Invalid input!")
